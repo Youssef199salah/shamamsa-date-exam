@@ -31,17 +31,24 @@
                 <input type="hidden" id="selectedDate" name="selectedDate" value="">
             </div>
             
-            <div class="form-group" >
+            <div class="form-group">
     @foreach ($examDatesArray as $item)
         @php
             // Get the date, actualLimit, and limit from the $item array
             $date = $item['date'];
-            $maxLimit = $item['max_num'] ?? 0;
-            $actualLimit = $item['actual_num'] ?? 0;
+            $maxLimit = $item['max_num'];
+            $actualLimit = $item['actual_num'];
         @endphp
-        <button type="button" class="btn btn-primary btn-lg date-button" 
-                data-date="{{ $date }}" actual-limit="{{ $actualLimit }}"  data-limit="{{ $maxLimit }}" 
-                name="date" @if ($maxLimit == $actualLimit) disabled @endif>
+        @php
+            // Check if the button should be disabled
+            $isDisabled = $maxLimit == $actualLimit;
+        @endphp
+        <button type="button" class="btn btn-lg date-button @if ($isDisabled) btn-danger @else btn-primary @endif" 
+                data-date="{{ $date }}" actual-limit="{{ $actualLimit }}" data-limit="{{ $maxLimit }}" 
+                name="date" @if ($isDisabled) disabled @endif>
+            @if ($isDisabled)
+            لم يتوفر أماكن في هذا اليوم - 
+            @endif
             {{ $date }}
         </button>
     @endforeach

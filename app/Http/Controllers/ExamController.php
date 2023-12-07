@@ -14,7 +14,7 @@ class ExamController extends Controller
     {
         $request->validate([
             'id' => 'required|integer',
-            'selectedDate' => 'required|date',
+            'selectedDate' => 'required',
         ]);
         $student = Student::find($request->input('id'));
         // dd($student == null);
@@ -22,7 +22,7 @@ class ExamController extends Controller
             return view('errorId');
         }
         $exam_check = Exam::where('name',$student->name)->where('type','taks')->first();
-        if($exam_check->name == $student->name && $exam_check->type == 'taks'){
+        if($exam_check){
             return view('error');
         }
         $exam = new Exam();
@@ -62,14 +62,14 @@ class ExamController extends Controller
     {
         $request->validate([
             'id' => 'required|integer',
-            'selectedDate' => 'required|date',
+            'selectedDate' => 'required',
         ]);
         $student = Student::find($request->input('id'));
         if($student == null){
             return view('errorId');
         }
         $exam_check = Exam::where('name',$student->name)->where('type','coptic')->first();
-        if($exam_check->name == $student->name && $exam_check->type == 'coptic'){
+        if($exam_check){
             return view('error');
         }
         $exam = new Exam();
@@ -108,14 +108,14 @@ class ExamController extends Controller
     {
         $request->validate([
             'id' => 'required|integer',
-            'selectedDate' => 'required|date',
+            'selectedDate' => 'required',
         ]);
         $student = Student::find($request->input('id'));
         if($student == null){
             return view('errorId');
         }
         $exam_check = Exam::where('name',$student->name)->where('type','alhan')->first();
-        if($exam_check->name == $student->name && $exam_check->type == 'alhan'){
+        if($exam_check){
             return view('error');
         }
         $exam = new Exam();
@@ -140,6 +140,7 @@ class ExamController extends Controller
         }else{
             return response()->json(['message' => 'Exam dates taks not found'], 201);
         }
+        
         return view('success');
     }
     public function getExamDatesAlhan()
