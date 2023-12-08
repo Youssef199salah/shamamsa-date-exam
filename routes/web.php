@@ -19,3 +19,7 @@ Route::post('/store-exam-coptic', [ExamController::class, 'storeCoptic'])->name(
 
 Route::get('/exam-date-alhan', [ExamController::class, 'getExamDatesAlhan'])->name('exam.getExamDatesAlhan');
 Route::post('/store-exam-alhan', [ExamController::class, 'storeAlhan'])->name('exam.storeAlhan');
+
+Route::get('/exam-date-agbia', [ExamController::class, 'getExamDatesAgbia'])->name('exam.getExamDatesAgbia');
+Route::post('/store-exam-agbia', [ExamController::class, 'storeAgbia'])->name('exam.storeAgbia');
+
