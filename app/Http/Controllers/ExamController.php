@@ -11,44 +11,51 @@ use App\Models\Student;
 class ExamController extends Controller
 {
     public function storeTaks(Request $request)
-    {
-        $request->validate([
-            'id' => 'required|integer',
-            'selectedDate' => 'required',
-        ]);
-        $student = Student::find($request->input('id'));
-        // dd($student == null);
-        if($student == null){
-            return view('errorId');
-        }
-        $exam_check = Exam::where('name',$student->name)->where('type','taks')->first();
-        if($exam_check){
-            return view('error');
-        }
-        $exam = new Exam();
-        $exam->name = $student->name;
-        $exam->date = $request->input('selectedDate');
-        $exam->type = 'taks';
-        $exam->save();
-        // Get the date from the request
-        $date = $request->input('selectedDate');
+{
+    $request->validate([
+        'id' => 'required|integer',
+        'selectedDate' => 'required',
+    ]);
 
-        // Find the ExamDate record with the specified date
-        $examDate = ExamDate::where('type','taks')->whereJsonContains('date', [['date' => $date]])->first();
-        if ($examDate) {
-            $dates = json_decode($examDate->date, true);
-            foreach ($dates as &$exam) {
-                if ($exam['date'] === $date) {
-                    $exam['actual_num'] = $exam['actual_num'] + 1;
-                    break;
-                }
-            }
-       $examDate->update(['date' => json_encode($dates)]);
-        }else{
-            return response()->json(['message' => 'Exam dates taks not found'], 201);
-        }
-        return view('success');
+    $student = Student::find($request->input('id'));
+
+    if ($student == null) {
+        return view('errorId');
     }
+
+    $exam_check = Exam::where('name', $student->name)->where('type', 'taks')->first();
+
+    if ($exam_check) {
+        return view('error');
+    }
+
+    $examDate = ExamDate::where('type', 'taks')->whereJsonContains('date', [['date' => $request->input('selectedDate')]])->first();
+
+    if (!$examDate) {
+        return response()->json(['message' => 'Exam dates taks not found'], 201);
+    }
+
+    $date = $request->input('selectedDate');
+    $dates = json_decode($examDate->date, true);
+
+    foreach ($dates as &$exam) {
+        if ($exam['date'] === $date) {
+            $exam['actual_num'] = $exam['actual_num'] + 1;
+            break;
+        }
+    }
+
+    $examDate->update(['date' => json_encode($dates, JSON_UNESCAPED_UNICODE)]);
+
+    $exam = new Exam();
+    $exam->name = $student->name;
+    $exam->date = $request->input('selectedDate');
+    $exam->type = 'taks';
+    $exam->save();
+
+    return view('success');
+}
+
     public function getExamDatesTaks()
     {
         $examDates = ExamDate::where('type','taks')->latest()->first();
@@ -64,36 +71,43 @@ class ExamController extends Controller
             'id' => 'required|integer',
             'selectedDate' => 'required',
         ]);
+    
         $student = Student::find($request->input('id'));
-        if($student == null){
+    
+        if ($student == null) {
             return view('errorId');
         }
-        $exam_check = Exam::where('name',$student->name)->where('type','coptic')->first();
-        if($exam_check){
+    
+        $exam_check = Exam::where('name', $student->name)->where('type', 'coptic')->first();
+    
+        if ($exam_check) {
             return view('error');
         }
+    
+        $examDate = ExamDate::where('type', 'coptic')->whereJsonContains('date', [['date' => $request->input('selectedDate')]])->first();
+    
+        if (!$examDate) {
+            return response()->json(['message' => 'Exam dates taks not found'], 201);
+        }
+    
+        $date = $request->input('selectedDate');
+        $dates = json_decode($examDate->date, true);
+    
+        foreach ($dates as &$exam) {
+            if ($exam['date'] === $date) {
+                $exam['actual_num'] = $exam['actual_num'] + 1;
+                break;
+            }
+        }
+    
+        $examDate->update(['date' => json_encode($dates, JSON_UNESCAPED_UNICODE)]);
+    
         $exam = new Exam();
         $exam->name = $student->name;
         $exam->date = $request->input('selectedDate');
         $exam->type = 'coptic';
         $exam->save();
-        // Get the date from the request
-        $date = $request->input('selectedDate');
-
-        // Find the ExamDate record with the specified date
-        $examDate = ExamDate::where('type','coptic')->whereJsonContains('date', [['date' => $date]])->first();
-        if ($examDate) {
-            $dates = json_decode($examDate->date, true);
-            foreach ($dates as &$exam) {
-                if ($exam['date'] === $date) {
-                    $exam['actual_num'] = $exam['actual_num'] + 1;
-                    break;
-                }
-            }
-       $examDate->update(['date' => json_encode($dates)]);
-        }else{
-            return response()->json(['message' => 'Exam dates taks not found'], 201);
-        }
+    
         return view('success');
     }
     public function getExamDatesCoptic()
@@ -110,37 +124,43 @@ class ExamController extends Controller
             'id' => 'required|integer',
             'selectedDate' => 'required',
         ]);
+    
         $student = Student::find($request->input('id'));
-        if($student == null){
+    
+        if ($student == null) {
             return view('errorId');
         }
-        $exam_check = Exam::where('name',$student->name)->where('type','alhan')->first();
-        if($exam_check){
+    
+        $exam_check = Exam::where('name', $student->name)->where('type', 'alhan')->first();
+    
+        if ($exam_check) {
             return view('error');
         }
+    
+        $examDate = ExamDate::where('type', 'alhan')->whereJsonContains('date', [['date' => $request->input('selectedDate')]])->first();
+    
+        if (!$examDate) {
+            return response()->json(['message' => 'Exam dates taks not found'], 201);
+        }
+    
+        $date = $request->input('selectedDate');
+        $dates = json_decode($examDate->date, true);
+    
+        foreach ($dates as &$exam) {
+            if ($exam['date'] === $date) {
+                $exam['actual_num'] = $exam['actual_num'] + 1;
+                break;
+            }
+        }
+    
+        $examDate->update(['date' => json_encode($dates, JSON_UNESCAPED_UNICODE)]);
+    
         $exam = new Exam();
         $exam->name = $student->name;
         $exam->date = $request->input('selectedDate');
         $exam->type = 'alhan';
         $exam->save();
-        // Get the date from the request
-        $date = $request->input('selectedDate');
-
-        // Find the ExamDate record with the specified date
-        $examDate = ExamDate::where('type','alhan')->whereJsonContains('date', [['date' => $date]])->first();
-        if ($examDate) {
-            $dates = json_decode($examDate->date, true);
-            foreach ($dates as &$exam) {
-                if ($exam['date'] === $date) {
-                    $exam['actual_num'] = $exam['actual_num'] + 1;
-                    break;
-                }
-            }
-       $examDate->update(['date' => json_encode($dates)]);
-        }else{
-            return response()->json(['message' => 'Exam dates taks not found'], 201);
-        }
-        
+    
         return view('success');
     }
     public function getExamDatesAlhan()
