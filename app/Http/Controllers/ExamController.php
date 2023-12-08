@@ -34,7 +34,7 @@ class ExamController extends Controller
         $date = $request->input('selectedDate');
 
         // Find the ExamDate record with the specified date
-        $examDate = ExamDate::where('type','taks')->whereJsonContains('date', [['date' => $date]])->get();
+        $examDate = ExamDate::where('type','taks')->whereJsonContains('date', [['date' => $date]])->first();
         if ($examDate) {
             $dates = json_decode($examDate->date, true);
             foreach ($dates as &$exam) {
