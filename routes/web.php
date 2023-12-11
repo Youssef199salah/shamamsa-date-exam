@@ -23,3 +23,23 @@ Route::post('/store-exam-alhan', [ExamController::class, 'storeAlhan'])->name('e
 Route::get('/exam-date-agbia', [ExamController::class, 'getExamDatesAgbia'])->name('exam.getExamDatesAgbia');
 Route::post('/store-exam-agbia', [ExamController::class, 'storeAgbia'])->name('exam.storeAgbia');
 
+Route::post('/delete-exam-date', [ExamController::class, 'deleteExamDate'])->name('exam.deleteExamDate');
+// Route::get('delete-date', function () {
+//     return view('delete-exam-date');
+// });
+
+Route::get('/table-exam-date-taks', [ExamController::class, 'getTableExamDatesTaks'])->name('exam.getTableExamDatesTaks');
+Route::get('/table-exam-date-coptic', [ExamController::class, 'getTableExamDatesCoptic'])->name('exam.getTableExamDatesCoptic');
+Route::get('/table-exam-date-alhan', [ExamController::class, 'getTableExamDatesAlhan'])->name('exam.getTableExamDatesAlhan');
+Route::get('/table-exam-date-agbia', [ExamController::class, 'getTableExamDatesAgbia'])->name('exam.getTableExamDatesAgbia');
+
+
+Route::get('/verify-password', function () {
+    return view('verify-password');
+});
+Route::post('/verify-password', [ExamController::class, 'verifyPassword'])->name('exam.verifyPassword');
+
+Route::get('/student-dates', function () {
+    return view('student-dates');
+});
+Route::post('/student-dates', [ExamController::class, 'getStudentDates'])->name('exam.getStudentDates');
