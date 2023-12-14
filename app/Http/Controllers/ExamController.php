@@ -56,12 +56,20 @@ class ExamController extends Controller
     return view('success');
 }
 
-    public function getExamDatesTaks()
+    public function getExamDatesTaks(Request $request)
     {
-        $examDates = ExamDate::where('type','taks')->latest()->first();
-        $examDatesArray = json_decode($examDates->date, true);
-        // dd($examDatesArray);
-        return view('exam-date-taks', ['examDatesArray' => $examDatesArray]);
+        $request->validate([
+            'password' => 'required',
+        ]);
+        if($request->input('password') == '852456'){
+            $examDates = ExamDate::where('type','taks')->latest()->first();
+            $examDatesArray = json_decode($examDates->date, true);
+            // dd($examDatesArray);
+            return view('exam-date-taks', ['examDatesArray' => $examDatesArray]);
+        }
+        else{
+            return view('error-message', ['message' => 'Wrong Password']);
+        }
     }
 
 
@@ -110,12 +118,20 @@ class ExamController extends Controller
     
         return view('success');
     }
-    public function getExamDatesCoptic()
+    public function getExamDatesCoptic(Request $request)
     {
-        $examDates = ExamDate::where('type','coptic')->latest()->first();
-        $examDatesArray = json_decode($examDates->date, true);
-        // dd($examDatesArray);
-        return view('exam-date-coptic', ['examDatesArray' => $examDatesArray]);
+        $request->validate([
+            'password' => 'required',
+        ]);
+        if($request->input('password') == '852456'){
+            $examDates = ExamDate::where('type','coptic')->latest()->first();
+            $examDatesArray = json_decode($examDates->date, true);
+            // dd($examDatesArray);
+            return view('exam-date-coptic', ['examDatesArray' => $examDatesArray]);
+        }
+        else{
+            return view('error-message', ['message' => 'Wrong Password']);
+        }
     }
 
     public function storeAlhan(Request $request)
@@ -163,12 +179,20 @@ class ExamController extends Controller
     
         return view('success');
     }
-    public function getExamDatesAlhan()
+    public function getExamDatesAlhan(Request $request)
     {
-        $examDates = ExamDate::where('type','alhan')->latest()->first();
-        $examDatesArray = json_decode($examDates->date, true);
-        // dd($examDatesArray);
-        return view('exam-date-alhan', ['examDatesArray' => $examDatesArray]);
+        $request->validate([
+            'password' => 'required',
+        ]);
+        if($request->input('password') == '852456'){
+            $examDates = ExamDate::where('type','alhan')->latest()->first();
+            $examDatesArray = json_decode($examDates->date, true);
+            // dd($examDatesArray);
+            return view('exam-date-alhan', ['examDatesArray' => $examDatesArray]);
+        }
+        else{
+            return view('error-message', ['message' => 'Wrong Password']);
+        }
     }
     public function storeAgbia(Request $request)
     {
@@ -215,12 +239,20 @@ class ExamController extends Controller
     
         return view('success');
     }
-    public function getExamDatesAgbia()
+    public function getExamDatesAgbia( Request $request)
     {
-        $examDates = ExamDate::where('type','agbia')->latest()->first();
-        $examDatesArray = json_decode($examDates->date, true);
-        // dd($examDatesArray);
-        return view('exam-date-agbia', ['examDatesArray' => $examDatesArray]);
+        $request->validate([
+            'password' => 'required',
+        ]);
+        if($request->input('password') == '852456'){
+            $examDates = ExamDate::where('type','agbia')->latest()->first();
+            $examDatesArray = json_decode($examDates->date, true);
+            // dd($examDatesArray);
+            return view('exam-date-agbia', ['examDatesArray' => $examDatesArray]);
+        }
+        else{
+            return view('error-message', ['message' => 'Wrong Password']);
+        }
     } 
     public function deleteExamDate(Request $request)
     {
